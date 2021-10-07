@@ -22,7 +22,6 @@ line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
  
  
-## 1 ##
 #Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -43,11 +42,6 @@ def callback():
     # handleの処理を終えればOK
     return 'OK'
  
-## 2 ##
-###############################################
-#LINEのメッセージの取得と返信内容の設定(オウム返し)
-###############################################
- 
 #LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に、
 #def以下の関数を実行します。
 #reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。 
@@ -55,7 +49,6 @@ def callback():
  
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print(event)
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text)) #ここでオウム返しのメッセージを返します。
