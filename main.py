@@ -34,13 +34,13 @@ def callback():
     app.logger.info("Request body: " + body)
  
     # handle webhook body
-　# 署名を検証し、問題なければhandleに定義されている関数を呼び出す。
+    # 署名を検証し、問題なければhandleに定義されている関数を呼び出す。
     try:
         handler.handle(body, signature)
-　# 署名検証で失敗した場合、例外を出す。
+    # 署名検証で失敗した場合、例外を出す。
     except InvalidSignatureError:
         abort(400)
-　# handleの処理を終えればOK
+    # handleの処理を終えればOK
     return 'OK'
  
 ## 2 ##
