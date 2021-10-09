@@ -16,7 +16,7 @@ def scrape():
     for ele in soup.select('.col-6.col-sm-4.col-md-3'):#('a[style*="solid"]'):
     	if 'border: 3px red' in str(ele):
     		for y_time in ele.select('div[class*=col-5]'):
-    			times = y_time.get_text().replace(" ","").replace("\n","")
+    			times = y_time.get_text().replace(" ","").replace("\n","")+"～"
     			#print("start >"+times)
     		for y_name in ele.select('div[class*=name]'):
     			names = y_name.get_text().replace(" ","").replace("\n","")
@@ -71,7 +71,7 @@ def flexdata(datas):
                               {
                                 "type": "icon",
                                 "size": "md",
-                                "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
+                                "url": 'https://schedule.hololive.tv/dist/images/icons/youtube.png',
                                 "margin": "none"
                               },
                               {
