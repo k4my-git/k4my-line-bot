@@ -7,9 +7,11 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 import os
+
+import hololive
  
 app = Flask(__name__)
  
@@ -54,6 +56,10 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="ok"))
+    if event.message.text == "hololive":
+        line_bot_api.reply_message(
+            event.reply_token,
+            FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
  
 # ポート番号の設定
 if __name__ == "__main__":
