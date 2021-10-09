@@ -101,5 +101,5 @@ def flexdata(datas):
                         "margin": "none"
                       }
                     }
-        base.append(template)
+        base["contents"].append(template)
     return base
