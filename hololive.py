@@ -90,12 +90,20 @@ def flexdata(datas):
                         "spacing": "none",
                         "contents": [
                           {
-                            "type": "image",
-                            "url": data["icon"],
-                            "size": "md",
-                            "margin": "none",
-                            "aspectMode": "fit"
-                          }
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "image",
+                                "url": data["icon"],
+                                "aspectMode": "cover",
+                                "size": "full"
+                              }
+                            ],
+                            "cornerRadius": "100px",
+                            "width": "72px",
+                            "height": "72px"
+                          },
                         ],
                         "flex": 0,
                         "margin": "none"
