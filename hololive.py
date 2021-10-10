@@ -107,7 +107,6 @@ def flexdata(datas):
                       "footer": {
                         "type": "box",
                         "layout": "horizontal",
-                        "spacing": "none",
                         "contents": [
                           {
                             "type": "box",
@@ -142,8 +141,8 @@ def flexdata(datas):
                             ]
                           }
                         ],
-                        "flex": 0,
-                        "margin": "none"
+                        "spacing": "xl",
+                        "paddingAll": "20px"
                       }
                     }
         base["contents"].append(template)
