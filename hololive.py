@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 import lxml,html5lib
 from youtubesearchpython import *
+import time
 
 def scrape():
     link = 'https://schedule.hololive.tv/'
@@ -32,13 +33,14 @@ def scrape():
     			if count == 0:
     				icons = y_icon['src']
     				count+=1
+
+    		time.sleep(2)
     		y_data = youtubes(urls)
 
     		data.append(dict(url=urls,name=y_data['name'],time=times,image=img,icon=icons,title=y_data['title'],count=y_data['viewcount'],chlink=y_data['chlink']))
     return flexdata(data)
 
 def youtubes(url):
-  #url = 'https://www.youtube.com/watch?v=9tgw2xkclFA'
   videoinfo = Video.getInfo(url)
   title = videoinfo["title"]
   viewcount = "視聴回数："+videoinfo["viewCount"]["text"]
