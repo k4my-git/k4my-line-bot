@@ -84,7 +84,7 @@ def flexdata(datas):
                             ],
                             "weight": "bold",
                             "size": "xl",
-                            "wrap": True
+                            "wrap": False
                           },
                           {
                             "type": "box",
