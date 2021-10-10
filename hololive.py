@@ -139,11 +139,12 @@ def flexdata(datas):
                                   {
                                     "type": "span",
                                     "text": data["name"]
-                                  }
+                                  },
                                 ],
                                 "margin": "xxl",
                                 "size": "xl",
-                                "align": "center"
+                                "align": "center",
+                                "wrap": true
                               }
                             ]
                           }
