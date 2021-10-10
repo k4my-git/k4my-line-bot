@@ -100,7 +100,7 @@ def flexdata(datas):
                               {
                                 "type": "text",
                                 "text": data["count"],
-                                "align": "end"
+                                "align": "center"
                               }
                             ]
                           }
@@ -135,7 +135,12 @@ def flexdata(datas):
                             "contents": [
                               {
                                 "type": "text",
-                                "text": data["name"],
+                                "contents": [
+                                  {
+                                    "type": "span",
+                                    "text": data["name"]
+                                  }
+                                ],
                                 "margin": "xxl",
                                 "size": "xl",
                                 "align": "center"
