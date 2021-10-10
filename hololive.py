@@ -43,7 +43,7 @@ def scrape():
 def youtubes(url):
   videoinfo = Video.getInfo(url)
   title = videoinfo["title"]
-  viewcount = "視聴回数："+videoinfo["viewCount"]["text"]
+  viewcount = videoinfo["viewCount"]["text"]+"views"
   name = videoinfo["channel"]["name"]
   chlink = videoinfo["channel"]["link"]
   y_data = dict(title=title,viewcount=viewcount,name=name,chlink=chlink)
