@@ -144,7 +144,7 @@ def flexdata(datas):
                                 "margin": "xxl",
                                 "size": "xl",
                                 "align": "center",
-                                "wrap": "true"
+                                "wrap": True
                               }
                             ]
                           }
