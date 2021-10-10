@@ -34,7 +34,7 @@ def scrape():
     				icons = y_icon['src']
     				count+=1
 
-    		time.sleep(2)
+    		#time.sleep(1)
     		y_data = youtubes(urls)
 
     		data.append(dict(url=urls,name=y_data['name'],time=times,image=img,icon=icons,title=y_data['title'],count=y_data['viewcount'],chlink=y_data['chlink']))
@@ -131,7 +131,7 @@ def flexdata(datas):
                           },
                           {
                             "type": "box",
-                            "layput": "vertical",
+                            "layout": "vertical",
                             "contents": [
                               {
                                 "type": "text",
