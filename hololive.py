@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 import lxml,html5lib
+from youtubesearchpython import *
 
 def scrape():
     link = 'https://schedule.hololive.tv/'
@@ -31,9 +32,21 @@ def scrape():
     			if count == 0:
     				icons = y_icon['src']
     				count+=1
+  			y_data = youtubes(urls)
 
-    		data.append(dict(url=urls,name=names,time=times,image=img,icon=icons))
+    		data.append(dict(url=urls,name=y_data['name'],time=times,image=img,icon=icons,title=y_data['title'],count=y_data['viewcount'],chlink=y_data['chlink']))
     return flexdata(data)
+
+def youtubes(url):
+  #url = 'https://www.youtube.com/watch?v=9tgw2xkclFA'
+  videoinfo = Video.getInfo(url)
+  title = videoinfo["title"]
+  viewcount = "視聴回数："+videoinfo["viewCount"]["text"]
+  name = videoinfo["channel"]["name"]
+  chlink = videoinfo["channel"]["link"]
+  y_data = dict(title=title,viewcount=viewcount,name=name,chlink=chlink)
+
+  return y_data
 
 def flexdata(datas):
     base = {
@@ -61,7 +74,7 @@ def flexdata(datas):
                         "contents": [
                           {
                             "type": "text",
-                            "text": data["name"],
+                            "text": data["title"],
                             "weight": "bold",
                             "size": "xl"
                           },
@@ -81,6 +94,11 @@ def flexdata(datas):
                                 "text": data["time"],
                                 "size": "md",
                                 "margin": "md"
+                              },
+                              {
+                                "type": "text",
+                                "text": data["count"],
+                                "align": "end"
                               }
                             ]
                           }
@@ -104,8 +122,22 @@ def flexdata(datas):
                             ],
                             "cornerRadius": "100px",
                             "width": "72px",
-                            "height": "72px"
+                            "height": "72px",
+                            "action": {
+                              "type": "uri",
+                              "uri": data["chlink"]
+                            }
                           },
+                          {
+                            "type": "box",
+                            "layput": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "text": data["name"]
+                              }
+                            ]
+                          }
                         ],
                         "flex": 0,
                         "margin": "none"
