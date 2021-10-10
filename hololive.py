@@ -76,9 +76,15 @@ def flexdata(datas):
                         "contents": [
                           {
                             "type": "text",
-                            "text": data["title"],
+                            "contents": [
+                              {
+                               "type": "span",
+                              "text": data["title"]
+                              }
+                            ],
                             "weight": "bold",
-                            "size": "xl"
+                            "size": "xl",
+                            "wrap": True
                           },
                           {
                             "type": "box",
