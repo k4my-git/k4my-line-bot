@@ -3,9 +3,9 @@ import requests
 import lxml,html5lib
 
 def scrape():
-    url = 'https://schedule.hololive.tv/'
+    link = 'https://schedule.hololive.tv/'
 
-    res = requests.get(url)
+    res = requests.get(link)
     try:
         soup = bs(res.text, "lxml")
     except:
@@ -15,6 +15,8 @@ def scrape():
 
     for ele in soup.select('.col-6.col-sm-4.col-md-3'):#('a[style*="solid"]'):
     	if 'border: 3px red' in str(ele):
+    		for y_url in ele.select('a[class=thumbnail]'):
+    			urls = y_url['href']
     		for y_time in ele.select('div[class*=col-5]'):
     			times = y_time.get_text().replace(" ","").replace("\n","")+"～"
     			#print("start >"+times)
@@ -30,7 +32,7 @@ def scrape():
     				icons = y_icon['src']
     				count+=1
 
-    		data.append(dict(name=names,time=times,image=img,icon=icons))
+    		data.append(dict(url=urls,name=names,time=times,image=img,icon=icons))
     return flexdata(data)
 
 def flexdata(datas):
@@ -50,7 +52,7 @@ def flexdata(datas):
                         "aspectMode": "cover",
                         "action": {
                           "type": "uri",
-                          "uri": "http://linecorp.com/"
+                          "uri": data["url"]
                         }
                       },
                       "body": {
