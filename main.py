@@ -57,9 +57,14 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text="ok"))
     if event.message.text == "hololive":
-        line_bot_api.reply_message(
-            event.reply_token,
-            FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
+        if hololive.scrape() == None:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="今は誰も配信していません"))
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
  
 # ポート番号の設定
 if __name__ == "__main__":
