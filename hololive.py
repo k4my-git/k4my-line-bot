@@ -160,4 +160,5 @@ def flexdata(datas):
                       }
                     }
         base["contents"].append(template)
+        print(base)
     return base
