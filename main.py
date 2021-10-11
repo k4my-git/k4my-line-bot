@@ -11,7 +11,7 @@ from linebot.models import (
 )
 import os
 
-import hololive
+import hololive,compass
  
 app = Flask(__name__)
  
@@ -65,7 +65,10 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
- 
+    if event.message.text == "compass":
+        line_bot_api.reply_message(
+            event.reply_token,
+                FlexSendMessage(alt_text='compass', contents=compass.gacha()))
 # ポート番号の設定
 if __name__ == "__main__":
 #    app.run()
