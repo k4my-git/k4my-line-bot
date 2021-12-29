@@ -74,7 +74,7 @@ def handle_message(event):
         print(event)
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event))
+            TextSendMessage(text=event.source.userId))
 
 
 # ポート番号の設定
