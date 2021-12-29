@@ -73,7 +73,7 @@ def handle_message(event):
     if event.message.text == "mid":
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event['source']['userId']))
+            TextSendMessage(text=event.message.source.userId))
 
 
 # ポート番号の設定
