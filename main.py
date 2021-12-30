@@ -71,12 +71,19 @@ def handle_message(event):
             event.reply_token,
             FlexSendMessage(alt_text='compass', contents=compass.gacha()))
     if event.message.text == "mid":
-        print(event.source.user_id)
+        uid = event.source.user_id
         profile = line_bot_api.get_profile(event.source.user_id)
         print(profile)
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='mid'))
+            TextSendMessage(text=uid))
+    if event.message.text == "gid":
+        print(event)
+        gid = event.source.group_id
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=gid))
+
 
 
 # ポート番号の設定
