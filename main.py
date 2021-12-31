@@ -93,7 +93,7 @@ def handle_message(event):
         print(bot_info, type(bot_info))
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=bot_info['displayName']))
+            TextSendMessage(text=bot_info.displayName))
 
 
 # ポート番号の設定
