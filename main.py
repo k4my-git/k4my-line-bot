@@ -92,7 +92,7 @@ def handle_message(event):
         info = line_bot_api.get_bot_info()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"{info['displayName']}"))
+            TextSendMessage(text=info['displayName']))
 
 
 # ポート番号の設定
