@@ -81,10 +81,11 @@ def handle_message(event):
             TextSendMessage(text=uid))
     if msg == "gid":
         print(event)
-        gid = event.source.group_id
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=gid))
+        if event.source.type == 'group':
+            gid = event.source.group_id
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=gid))
     if msg == "group":
         gid = event.source.group_id
         g_summary = line_bot_api.get_group_summary(gid)
