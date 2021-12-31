@@ -90,6 +90,7 @@ def handle_message(event):
         print(gid)
     if msg == "bot":
         bot_info = line_bot_api.get_bot_info()
+        print(bot_info, type(bot_info))
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=bot_info['displayName']))
