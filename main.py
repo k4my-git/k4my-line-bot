@@ -89,10 +89,10 @@ def handle_message(event):
         g_summary = line_bot_api.get_group_summary(gid)
         print(gid)
     if msg == "bot":
-        info = line_bot_api.get_bot_info()
+        bot_info = line_bot_api.get_bot_info()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=info['displayName']))
+            TextSendMessage(text=bot_info['displayName']))
 
 
 # ポート番号の設定
