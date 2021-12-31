@@ -52,12 +52,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text == "test":
+    msg = event.message.text
+    if msg == "test":
         print(event)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="ok"))
-    if event.message.text == "hololive":
+    if msg == "hololive":
         if hololive.scrape() is None:
             line_bot_api.reply_message(
                 event.reply_token,
@@ -66,23 +67,27 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
-    if event.message.text == "compass":
+    if msg == "compass":
         line_bot_api.reply_message(
             event.reply_token,
             FlexSendMessage(alt_text='compass', contents=compass.gacha()))
-    if event.message.text == "mid":
+    if msg == "mid":
         uid = event.source.user_id
         profile = line_bot_api.get_profile(event.source.user_id)
         print(profile)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=uid))
-    if event.message.text == "gid":
+    if msg == "gid":
         print(event)
         gid = event.source.group_id
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=gid))
+    if msg == "group":
+        gid = event.source.group_id
+        g_summary = line_bot_api.get_group_summary(gid)
+        print(gid)
 
 
 
