@@ -108,8 +108,7 @@ def handle_message(event):
             )
         rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
         print(rich_menu_id)
-        uid = event.source.user_id
-        line_bot_api.link_rich_menu_to_user(uid, rich_menu_id)
+        line_bot_api.set_default_rich_menu(rich_menu_id)
 
 
 # ポート番号の設定
