@@ -53,78 +53,80 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print(event)
-    msg = event.message.text
-    if msg == "test":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="ok"))
-    if msg == "hololive":
-        if hololive.scrape() is None:
+    try:
+        msg = event.message.text
+        if msg == "test":
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="今は誰も配信していません"))
-        else:
+                TextSendMessage(text="ok"))
+        if msg == "hololive":
+            if hololive.scrape() is None:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="今は誰も配信していません"))
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
+        if msg == "compass":
             line_bot_api.reply_message(
                 event.reply_token,
-                FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
-    if msg == "compass":
-        line_bot_api.reply_message(
-            event.reply_token,
-            FlexSendMessage(alt_text='compass', contents=compass.gacha()))
-    if msg == "uid":
-        uid = event.source.user_id
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=uid))
-    if "uid" in msg and "@" in msg:
-        users = event.message.mention.mentionees
-        mbox = ""
-        for user in users:
-            profile = line_bot_api.get_profile(user.user_id)
-            print(profile)
-            txt = f"[{profile.display_name}]\n{user.user_id}\n"
-            mbox.append(txt)
-        print(mbox)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=mbox))
-    if msg == "gid" and event.source.type == 'group':
-        gid = event.source.group_id
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=gid))
-    if msg == "profile":
-        uid = event.source.user_id
-        profile = line_bot_api.get_profile(uid)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=f"name:{profile.display_name}\nstatus_message:{profile.status_message}\npicture:{profile.picture_url}"))
-    if msg == "group" and event.source.type == 'group':
-        gid = event.source.group_id
-        g_summary = line_bot_api.get_group_summary(gid)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=f"name:{g_summary.group_name}\npicture:{g_summary.picture_url}"))
-    if msg == "bot":
-        bot_info = line_bot_api.get_bot_info()
-        print(bot_info, type(bot_info))
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=bot_info.display_name))
-    if msg == "richmenu":
-        rich_menu_to_create = RichMenu(
-            size=RichMenuSize(width=2500, height=843),
-            selected=False,
-            name="Nice richmenu",
-            chat_bar_text="Tap here",
-            areas=[RichMenuArea(
-                bounds=RichMenuBounds(x=0, y=0, width=2500, height=843),
-                action=URIAction(label='Go to line.me', uri='https://line.me'))]
-            )
-        rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
-        print(rich_menu_id)
-        line_bot_api.set_default_rich_menu(rich_menu_id)
+                FlexSendMessage(alt_text='compass', contents=compass.gacha()))
+        if msg == "uid":
+            uid = event.source.user_id
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=uid))
+        if "uid" in msg and "@" in msg:
+            users = event.message.mention.mentionees
+            mbox = ""
+            for user in users:
+                profile = line_bot_api.get_profile(user.user_id)
+                print(profile)
+                txt = f"[{profile.display_name}]\n{user.user_id}\n"
+                mbox.append(txt)
+            print(mbox)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=mbox))
+        if msg == "gid" and event.source.type == 'group':
+            gid = event.source.group_id
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=gid))
+        if msg == "profile":
+            uid = event.source.user_id
+            profile = line_bot_api.get_profile(uid)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"name:{profile.display_name}\nstatus_message:{profile.status_message}\npicture:{profile.picture_url}"))
+        if msg == "group" and event.source.type == 'group':
+            gid = event.source.group_id
+            g_summary = line_bot_api.get_group_summary(gid)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"name:{g_summary.group_name}\npicture:{g_summary.picture_url}"))
+        if msg == "bot":
+            bot_info = line_bot_api.get_bot_info()
+            print(bot_info, type(bot_info))
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=bot_info.display_name))
+        if msg == "richmenu":
+            rich_menu_to_create = RichMenu(
+                size=RichMenuSize(width=2500, height=843),
+                selected=False,
+                name="Nice richmenu",
+                chat_bar_text="Tap here",
+                areas=[RichMenuArea(
+                    bounds=RichMenuBounds(x=0, y=0, width=2500, height=843),
+                    action=URIAction(label='Go to line.me', uri='https://line.me'))]
+                )
+            rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
+            print(rich_menu_id)
+            line_bot_api.set_default_rich_menu(rich_menu_id)
+    except Exception as error:
+        print(error)
 
 
 # ポート番号の設定
