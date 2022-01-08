@@ -80,7 +80,7 @@ def handle_message(event):
     if "uid" in msg and "@" in msg:
         users = event.message.mention.mentionees
         print(users)
-        for uid in users.user_id:
+        for uid in users.userId:
             line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=uid))
