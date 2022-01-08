@@ -79,10 +79,13 @@ def handle_message(event):
             TextSendMessage(text=uid))
     if "uid" in msg and "@" in msg:
         users = event.message.mention.mentionees
+        mbox = ""
         for user in users:
-            line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=user.user_id))
+            txt = user.user_id+"\n"
+            mbox.append(txt)
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=mbox))
     if msg == "gid" and event.source.type == 'group':
         gid = event.source.group_id
         line_bot_api.reply_message(
