@@ -81,7 +81,8 @@ def handle_message(event):
         users = event.message.mention.mentionees
         mbox = ""
         for user in users:
-            txt = user.user_id+"\n"
+            profile = line_bot_api.get_profile(user.user_id)
+            txt = f"[{profile.display_name}]\n{user.user_id}\n"
             mbox.append(txt)
         line_bot_api.reply_message(
         event.reply_token,
