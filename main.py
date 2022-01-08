@@ -86,6 +86,14 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=gid))
+    if msg == "profile":
+        uid = event.source.user_id
+        profile = line_bot_api.get_profile(event.source.user_id)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"name:{profile.display_name}\n\
+                                status_message:{profile.status_message}\n\
+                                picture:{profile.picture_url}"))
     if msg == "group":
         gid = event.source.group_id
         g_summary = line_bot_api.get_group_summary(gid)
