@@ -10,6 +10,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage, RichMenu, RichMenuArea, RichMenuBounds, RichMenuSize, URIAction, events
 )
 import os
+import logging
 import hololive
 import compass
 
@@ -55,7 +56,6 @@ def handle_message(event):
     print(event)
     msg = event.message.text
     if msg == "test":
-        print(event)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="ok"))
@@ -79,10 +79,10 @@ def handle_message(event):
             TextSendMessage(text=uid))
     if "uid" in msg and "@" in msg:
         users = event.message.mention.mentionees
-        print(users)
         mbox = ""
         for user in users:
             profile = line_bot_api.get_profile(user.user_id)
+            print(profile)
             txt = f"[{profile.display_name}]\n{user.user_id}\n"
             mbox.append(txt)
         print(mbox)
@@ -129,6 +129,7 @@ def handle_message(event):
 
 # ポート番号の設定
 if __name__ == "__main__":
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     #    app.run()
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
