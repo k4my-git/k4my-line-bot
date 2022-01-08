@@ -79,6 +79,7 @@ def handle_message(event):
             TextSendMessage(text=uid))
     if "uid" in msg and "@" in msg:
         users = event.message.mention.mentionees
+        print(users)
         mbox = ""
         for user in users:
             profile = line_bot_api.get_profile(user.user_id)
