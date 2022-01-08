@@ -10,6 +10,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage, RichMenu, RichMenuArea, RichMenuBounds, RichMenuSize, URIAction, events
 )
 import os
+import traceback
 import logging
 import hololive
 import compass
@@ -125,8 +126,8 @@ def handle_message(event):
             rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
             print(rich_menu_id)
             line_bot_api.set_default_rich_menu(rich_menu_id)
-    except Exception as error:
-        print(error)
+    except Exception:
+        print(traceback.format_exc())
 
 
 # ポート番号の設定
