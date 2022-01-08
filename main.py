@@ -89,7 +89,9 @@ def handle_message(event):
     if msg == "group":
         gid = event.source.group_id
         g_summary = line_bot_api.get_group_summary(gid)
-        print(gid)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"name:{g_summary.group_name}\npicture:{g_summary.picture_url}"))
     if msg == "bot":
         bot_info = line_bot_api.get_bot_info()
         print(bot_info, type(bot_info))
