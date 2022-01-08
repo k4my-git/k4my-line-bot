@@ -84,9 +84,10 @@ def handle_message(event):
             profile = line_bot_api.get_profile(user.user_id)
             txt = f"[{profile.display_name}]\n{user.user_id}\n"
             mbox.append(txt)
+        print(mbox)
         line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=mbox))
+            event.reply_token,
+            TextSendMessage(text=mbox))
     if msg == "gid" and event.source.type == 'group':
         gid = event.source.group_id
         line_bot_api.reply_message(
