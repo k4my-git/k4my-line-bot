@@ -72,9 +72,16 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             FlexSendMessage(alt_text='compass', contents=compass.gacha()))
-    if msg == "mid":
+    if msg == "uid":
         uid = event.source.user_id
         line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=uid))
+    if "uid" in msg and "@" in msg:
+        users = event.message.mention.mentionees
+        print(users)
+        for uid in users.user_id:
+            line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=uid))
     if msg == "gid" and event.source.type == 'group':
