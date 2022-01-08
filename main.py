@@ -83,10 +83,8 @@ def handle_message(event):
             mbox = ""
             for user in users:
                 profile = line_bot_api.get_profile(user.user_id)
-                print(profile)
                 txt = f"[{profile.display_name}]\n{user.user_id}\n"
-                mbox.append(txt)
-            print(mbox)
+                mbox += txt
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=mbox))
