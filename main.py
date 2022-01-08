@@ -52,7 +52,6 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print(event)
     msg = event.message.text
     if msg == "test":
         print(event)
@@ -74,8 +73,6 @@ def handle_message(event):
             FlexSendMessage(alt_text='compass', contents=compass.gacha()))
     if msg == "mid":
         uid = event.source.user_id
-        profile = line_bot_api.get_profile(event.source.user_id)
-        print(profile)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=uid))
@@ -88,12 +85,12 @@ def handle_message(event):
                 TextSendMessage(text=gid))
     if msg == "profile":
         uid = event.source.user_id
-        profile = line_bot_api.get_profile(event.source.user_id)
+        profile = line_bot_api.get_profile(uid)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=f"name:{profile.display_name}\n\
-                                status_message:{profile.status_message}\n\
-                                picture:{profile.picture_url}"))
+                status_message:{profile.status_message}\n\
+                    picture:{profile.picture_url}"))
     if msg == "group":
         gid = event.source.group_id
         g_summary = line_bot_api.get_group_summary(gid)
