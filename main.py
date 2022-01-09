@@ -67,7 +67,7 @@ def check_greeting(gid):
                 print(mes)
                 return mes
             except Exception as error:
-                print(error)
+                print(error+"1")
                 return False
 
 def get_greeting(gid):
@@ -81,7 +81,7 @@ def get_greeting(gid):
                 print(mes)
                 return mes
             except Exception as error:
-                print(error)
+                print(error+"2")
                 return "exception"
 
 # Webhookからのリクエストをチェックします。
