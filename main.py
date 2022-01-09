@@ -52,7 +52,8 @@ def set_greeting(gid,text):
                 mes = f"挨拶を「{text}」に設定しました"
                 return mes
             except Exception as error:
-                mes = error
+                print(error)
+                mes = "exception"
                 return mes
 
 def check_greeting(gid):
