@@ -60,8 +60,8 @@ def check_greeting(gid):
     with get_connection() as conn:
         with conn.cursor() as cur:
             try:
-                sql_Str = "SELECT switch FROM group_info WHERE group_id=%s", (gid)
-                vars = (gid)
+                sql_Str = "SELECT switch FROM group_info WHERE group_id=%s"
+                vars = str(gid)
                 cur.execute(sql_Str, vars)
                 mes = cur.fetchone()
                 print(mes)
