@@ -43,6 +43,40 @@ def get_response_message():
                 mes = "exception"
                 return mes
 
+def set_greeting(gid,text):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                sql_Str = "INSERT INTO group_info(group_id, join_message, switch) VALUES(%s, %s, %s)", (gid, text, True)
+                cur.execute(sql_Str)
+                mes = f"挨拶を「{text}」に設定しました"
+                return mes
+            except Exception:
+                mes = "exception"
+                return mes
+
+def check_greeting(gid):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                sql_Str = "SELECT switch FROM group_info WHERE group_id=%s", (gid)
+                cur.execute(sql_Str)
+                (mes,) = cur.fetchone()
+                return mes
+            except Exception:
+                return False
+
+def get_greeting(gid):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                sql_Str = "SELECT join_message FROM group_info WHERE group_id=%s", (gid)
+                cur.execute(sql_Str)
+                (mes,) = cur.fetchone()
+                return mes
+            except Exception:
+                return "exception"
+
 # Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -132,12 +166,18 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=get_response_message()))
+        if "greeting:" in msg:
+            txt = msg.replace("greeting:","")
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=set_greeting(event.source.group_id, txt)))
     except Exception:
         print(traceback.format_exc())
 
 @handler.add(MemberJoinedEvent)
 def handler_join(event):
-    line_bot_api.push_message(event.source.group_id, TextSendMessage(text='Hi!'))
+    if check_greeting(event.source.group_id):
+        line_bot_api.push_message(event.source.group_id, TextSendMessage(text=get_greeting(event.source.group_id)))
 
 
 # ポート番号の設定
