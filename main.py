@@ -48,7 +48,7 @@ def set_greeting(gid,text):
         with conn.cursor() as cur:
             try:
                 sql_Str = "INSERT INTO group_info(group_id, join_message, switch) VALUES(%s, %s, %s)", (gid, text, True)
-                cur.execute(sql_Str)
+                cur.execute(*sql_Str)
                 mes = f"挨拶を「{text}」に設定しました"
                 return mes
             except Exception as error:
