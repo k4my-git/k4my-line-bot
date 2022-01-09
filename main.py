@@ -51,8 +51,8 @@ def set_greeting(gid,text):
                 cur.execute(sql_Str)
                 mes = f"挨拶を「{text}」に設定しました"
                 return mes
-            except Exception:
-                mes = "exception"
+            except Exception as error:
+                mes = error
                 return mes
 
 def check_greeting(gid):
