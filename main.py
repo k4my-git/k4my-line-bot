@@ -13,6 +13,7 @@ from linebot.models import (
 import os
 import traceback
 import logging
+import psycopg2
 import hololive
 import compass
 
@@ -26,6 +27,21 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+def get_connection():
+    dsn = "host=ec2-34-201-95-87.compute-1.amazonaws.com port=5432 dbname=dcknjc81kjsjse user=vdueywviqryxbs password=be8a79c3d3b7c0e1ec0c26119627f45081f7ac3e8472b60af5fb8405f4b1f468"
+    return psycopg2.connect(dsn)
+
+def get_response_message():
+    with get_connection() as conn:
+        with conn.cursor(name="cs") as cur:
+            try:
+                sql_Str = "SELECT TO_CHAR(CURRENT_DATE, 'yyyy/mm/dd');"
+                cur.execute(sql_Str)
+                (mes,) = cur.fetchone()
+                return mes
+            except Exception:
+                mes = "exception"
+                return mes
 
 # Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
@@ -112,6 +128,10 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=bot_info.display_name))
+        if msg == "time":
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=get_response_message()))
     except Exception:
         print(traceback.format_exc())
 
