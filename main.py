@@ -62,7 +62,7 @@ def check_greeting(gid):
             try:
                 sql_Str = "SELECT switch FROM group_info WHERE group_id=%s", (gid)
                 cur.execute(*sql_Str)
-                (mes,) = cur.fetchone()
+                mes = cur.fetchone()
                 print(mes)
                 return mes
             except Exception as error:
