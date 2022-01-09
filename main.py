@@ -63,6 +63,7 @@ def check_greeting(gid):
                 sql_Str = "SELECT switch FROM group_info WHERE group_id=%s", (gid)
                 cur.execute(sql_Str)
                 (mes,) = cur.fetchone()
+                print(mes)
                 return mes
             except Exception:
                 return False
@@ -74,6 +75,7 @@ def get_greeting(gid):
                 sql_Str = "SELECT join_message FROM group_info WHERE group_id=%s", (gid)
                 cur.execute(sql_Str)
                 (mes,) = cur.fetchone()
+                print(mes)
                 return mes
             except Exception:
                 return "exception"
