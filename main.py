@@ -7,7 +7,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage, RichMenu, RichMenuArea, RichMenuBounds, RichMenuSize, URIAction, events
+    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,
+    JoinEvent
 )
 import os
 import traceback
@@ -126,6 +127,11 @@ def handle_message(event):
             line_bot_api.set_default_rich_menu(rich_menu_id)
     except Exception:
         print(traceback.format_exc())
+
+@handler.add(JoinEvent)
+def handler_join(event):
+    print("joinEvent")
+    #line_bot_api.push_message()
 
 
 # ポート番号の設定
