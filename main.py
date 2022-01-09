@@ -64,7 +64,6 @@ def check_greeting(gid):
                 vars = str(gid)
                 cur.execute(sql_Str, (vars,))
                 (mes,) = cur.fetchone()
-                print(mes)
                 return mes
             except Exception as error:
                 print(error)
@@ -79,12 +78,11 @@ def get_greeting(gid):
                 vars = str(gid)
                 cur.execute(sql_Str, (vars,))
                 (mes,) = cur.fetchone()
-                print(mes)
                 return mes
             except Exception as error:
                 print(error)
                 print("2")
-                return "exception"
+                return "None"
 
 # Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
@@ -164,7 +162,7 @@ def handle_message(event):
             g_summary = line_bot_api.get_group_summary(gid)
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"name:{g_summary.group_name}\npicture:{g_summary.picture_url}"))
+                TextSendMessage(text=f"name:{g_summary.group_name}\nGreeting:{get_greeting(gid)}\npicture:{g_summary.picture_url}"))
         if msg == "bot":
             bot_info = line_bot_api.get_bot_info()
             print(bot_info, type(bot_info))
