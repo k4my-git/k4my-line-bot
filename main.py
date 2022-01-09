@@ -61,7 +61,8 @@ def check_greeting(gid):
         with conn.cursor() as cur:
             try:
                 sql_Str = "SELECT switch FROM group_info WHERE group_id=%s", (gid)
-                cur.execute(sql_Str)
+                vars = (gid)
+                cur.execute(sql_Str, vars)
                 mes = cur.fetchone()
                 print(mes)
                 return mes
