@@ -178,6 +178,8 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=set_greeting(event.source.group_id, txt)))
+        if msg == "follower":
+            print(line_bot_api.get_followers_ids())
     except Exception:
         print(traceback.format_exc())
 
