@@ -19,8 +19,6 @@ import compass
 
 app = Flask(__name__)
 
-# 環境変数取得
-# LINE Developersで設定されているアクセストークンとChannel Secretをを取得し、設定します。
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
@@ -84,31 +82,19 @@ def get_greeting(gid):
                 print("2")
                 return "None"
 
-# Webhookからのリクエストをチェックします。
 @app.route("/callback", methods=['POST'])
 def callback():
-    # リクエストヘッダーから署名検証のための値を取得します。
     signature = request.headers['X-Line-Signature']
 
-    # リクエストボディを取得します。
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    # handle webhook body
-    # 署名を検証し、問題なければhandleに定義されている関数を呼び出す。
     try:
         handler.handle(body, signature)
-    # 署名検証で失敗した場合、例外を出す。
     except InvalidSignatureError:
         abort(400)
-    # handleの処理を終えればOK
     return 'OK'
 
-
-# LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に、
-# def以下の関数を実行します。
-# reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。
-# 第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -187,7 +173,6 @@ def handler_join(event):
         line_bot_api.push_message(event.source.group_id, TextSendMessage(text=get_greeting(event.source.group_id)))
 
 
-# ポート番号の設定
 if __name__ == "__main__":
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     #    app.run()
