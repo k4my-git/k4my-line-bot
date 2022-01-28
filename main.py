@@ -82,6 +82,20 @@ def get_greeting(gid):
                 print("2")
                 return "None"
 
+def update_greeting(gid,text):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                sql_Str = "UPDATE group_info SET join_message = '%s' WHERE group_id=%s"
+                vars = str(text,gid)
+                cur.execute(sql_Str, (vars,))
+                (mes,) = cur.fetchone()
+                return mes
+            except Exception as error:
+                print(error)
+                print("3")
+                return "None"
+
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -161,6 +175,7 @@ def handle_message(event):
                 TextSendMessage(text=get_response_message()))
         if "greeting:" in msg:
             txt = msg.replace("greeting:","")
+            if 
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=set_greeting(event.source.group_id, txt)))
