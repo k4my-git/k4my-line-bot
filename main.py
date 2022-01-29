@@ -14,6 +14,9 @@ import os
 import traceback
 import logging
 import psycopg2
+from sklearn.covariance import shrunk_covariance
+import pyshorteners
+
 import hololive
 import compass
 
@@ -24,7 +27,8 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
-
+####################################################################################
+#DB
 def get_connection():
     dsn = "host=ec2-34-201-95-87.compute-1.amazonaws.com port=5432 dbname=dcknjc81kjsjse user=vdueywviqryxbs password=be8a79c3d3b7c0e1ec0c26119627f45081f7ac3e8472b60af5fb8405f4b1f468"
     return psycopg2.connect(dsn)
@@ -94,6 +98,11 @@ def update_greeting(gid,text):
                 print(error)
                 print("3")
                 return "None"
+###############################################################################################
+
+def url_short(original_url):
+    short_url = pyshorteners.Shortener().tinyurl.short(original_url)
+    return short_url
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -155,13 +164,13 @@ def handle_message(event):
             profile = line_bot_api.get_profile(uid)
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"name:{profile.display_name}\nstatus_message:{profile.status_message}\npicture:{profile.picture_url}"))
+                TextSendMessage(text=f"name:{profile.display_name}\nstatus_message:{profile.status_message}\npicture:{url_short(profile.picture_url)}"))
         if msg == "group" and event.source.type == 'group':
             gid = event.source.group_id
             g_summary = line_bot_api.get_group_summary(gid)
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"name:{g_summary.group_name}\nGreeting:{get_greeting(gid)}\npicture:{g_summary.picture_url}"))
+                TextSendMessage(text=f"name:{g_summary.group_name}\nGreeting:{get_greeting(gid)}\npicture:{url_short(g_summary.picture_url)}"))
         if msg == "bot":
             bot_info = line_bot_api.get_bot_info()
             print(bot_info, type(bot_info))
