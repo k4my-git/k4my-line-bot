@@ -86,10 +86,9 @@ def update_greeting(gid,text):
     with get_connection() as conn:
         with conn.cursor() as cur:
             try:
-                sql_Str = "UPDATE group_info SET join_message = '%s' WHERE group_id=%s"
-                vars = str(text,gid)
-                cur.execute(sql_Str, (vars,))
-                (mes,) = cur.fetchone()
+                sql_Str = "UPDATE group_info SET join_message = '%s' WHERE group_id=%s", (text, gid)
+                cur.execute(*sql_Str)
+                mes = f"挨拶を「{text}」に変更しました"
                 return mes
             except Exception as error:
                 print(error)
@@ -175,10 +174,14 @@ def handle_message(event):
                 TextSendMessage(text=get_response_message()))
         if "greeting:" in msg:
             txt = msg.replace("greeting:","")
-            if 
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=set_greeting(event.source.group_id, txt)))
+            if check_greeting(event.source.group_id) == False:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=set_greeting(event.source.group_id, txt)))
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=update_greeting(event.source.group_id, txt)))
     except Exception:
         print(traceback.format_exc())
 
