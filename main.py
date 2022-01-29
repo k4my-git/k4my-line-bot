@@ -86,7 +86,7 @@ def update_greeting(gid,text):
     with get_connection() as conn:
         with conn.cursor() as cur:
             try:
-                sql_Str = "UPDATE group_info SET join_message = '%s' WHERE group_id=%s", (text, gid)
+                sql_Str = "UPDATE group_info SET join_message = %s WHERE group_id=%s", (text, gid)
                 cur.execute(*sql_Str)
                 mes = f"挨拶を「{text}」に変更しました"
                 return mes
