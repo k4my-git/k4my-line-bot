@@ -14,7 +14,6 @@ import os
 import traceback
 import logging
 import psycopg2
-from sklearn.covariance import shrunk_covariance
 import pyshorteners
 
 import hololive
