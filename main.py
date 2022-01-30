@@ -132,9 +132,9 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text="process..."))
             end = time.time() - start
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=f"{end}sec"))
+            line_bot_api.push_message(
+                event.source.group_id,
+                 TextSendMessage(text=f"{end}sec"))
         if msg == "hololive":
             if hololive.scrape() is None:
                 line_bot_api.reply_message(
