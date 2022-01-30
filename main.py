@@ -141,8 +141,11 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text="今は誰も配信していません"))
             else:
-                line_bot_api.reply_message(
-                    event.reply_token,
+                #line_bot_api.reply_message(
+                #    event.reply_token,
+                #    FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
+                line_bot_api.push_message(
+                    event.source.group_id,
                     FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
         if msg == "compass":
             line_bot_api.reply_message(
