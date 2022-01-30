@@ -141,11 +141,15 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text="今は誰も配信していません"))
             else:
+                if event.source.type == 'group':
+                    ID = event.source.group_id
+                elif event.source.type == 'user':
+                    ID = event.source.user_id
                 #line_bot_api.reply_message(
                 #    event.reply_token,
                 #    FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
                 line_bot_api.push_message(
-                    event.source.group_id,
+                    ID,
                     FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
         if msg == "compass":
             line_bot_api.reply_message(
