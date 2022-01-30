@@ -11,6 +11,7 @@ from linebot.models import (
     MemberJoinedEvent
 )
 import os
+import time
 import traceback
 import logging
 import psycopg2
@@ -125,6 +126,15 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="ok"))
+        if msg == "speed":
+            start = time.time()
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="process..."))
+            end = time.time() - start
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"{end}sec"))
         if msg == "hololive":
             if hololive.scrape() is None:
                 line_bot_api.reply_message(
