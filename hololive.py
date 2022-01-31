@@ -12,7 +12,7 @@ def scrape():
     res = requests.get(link)
     try:
         soup = bs(res.text, "lxml")
-    except:
+    except Exception:
         soup = bs(res.text, "html5lib")
 
     data = []
@@ -23,8 +23,8 @@ def scrape():
                 urls = y_url['href']
             for y_time in ele.select('div[class*=col-5]'):
                 times = y_time.get_text().replace(" ", "").replace("\n", "") + "～"
-            for y_name in ele.select('div[class*=name]'):
-                names = y_name.get_text().replace(" ", "").replace("\n", "")
+            #for y_name in ele.select('div[class*=name]'):
+                #names = y_name.get_text().replace(" ", "").replace("\n", "")
             for thumbnail in ele.select('div[class*=col-12] > img'):
                 img = thumbnail['src']
             count = 0
