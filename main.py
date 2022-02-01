@@ -141,6 +141,7 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text="今は誰も配信していません"))
             else:
+                print("a")
                 if event.source.type == 'group':
                     ID = event.source.group_id
                 elif event.source.type == 'user':
