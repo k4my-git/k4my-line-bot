@@ -148,8 +148,7 @@ def handle_message(event):
                 def split_list(l, n):
                     for idx in range(0, len(l), n):
                         yield l[idx:idx + n]
-                content = list(split_list(hololive.scrape(),6))
-                for i in range(len(content)):
+                for i in list(split_list(hololive.scrape(),6)):
                     base = {
                         "type": "carousel",
                         "contents": i
