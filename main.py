@@ -136,12 +136,12 @@ def handle_message(event):
                 event.source.group_id,
                  TextSendMessage(text=f"{end}sec"))
         if msg == "hololive":
-            if hololive.scrape() is None:
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text="今は誰も配信していません"))
-            else:
-                print("a")
+           #if hololive.scrape() is None:
+           #    line_bot_api.reply_message(
+           #        event.reply_token,
+           #        TextSendMessage(text="今は誰も配信していません"))
+           #else:
+            try:
                 if event.source.type == 'group':
                     ID = event.source.group_id
                 elif event.source.type == 'user':
@@ -157,6 +157,10 @@ def handle_message(event):
                     line_bot_api.push_message(
                         ID,
                         FlexSendMessage(alt_text='hololive', contents=base))
+            except Exception as e:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=e))
         if msg == "compass":
             line_bot_api.reply_message(
                 event.reply_token,
