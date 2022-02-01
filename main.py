@@ -148,13 +148,12 @@ def handle_message(event):
                 def split_list(l, n):
                     for idx in range(0, len(l), n):
                         yield l[idx:idx + n]
-                contents = hololive.scrape()
-                if len(contents) > 6:
-                    content = list(split_list(contents,6))
+                if len(hololive.scrape()["size"]) > 6:
+                    content = list(split_list(hololive.scrape()["contents"],6))
                     for i in range(len(content)):
                         base = {
                             "type": "carousel",
-                            "contents": [i]
+                            "contents": i
                         }
                         line_bot_api.push_message(
                             ID,
@@ -162,7 +161,7 @@ def handle_message(event):
                 else:
                     base = {
                             "type": "carousel",
-                            "contents": contents
+                            "contents": hololive.scrape()["contents"]
                         }
                     line_bot_api.push_message(
                         ID,
