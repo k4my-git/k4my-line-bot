@@ -6,6 +6,7 @@ from youtubesearchpython import *
 
 
 def scrape():
+    print("hololive")
     global urls, times, img, icons
     link = 'https://schedule.hololive.tv/'
 
