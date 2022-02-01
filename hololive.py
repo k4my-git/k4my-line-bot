@@ -57,11 +57,7 @@ def youtubes(url):
 
 
 def flexdata(datas):
-    base = {
-        "type": "carousel",
-        "contents": []
-    }
-
+    contents = []
     for data in datas:
         template = {
             "type": "bubble",
@@ -165,5 +161,5 @@ def flexdata(datas):
                 "paddingAll": "20px"
             }
         }
-        base["contents"].append(template)
-    return base
+        contents.append(template)
+    return contents

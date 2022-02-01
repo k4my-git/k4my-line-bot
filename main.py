@@ -145,12 +145,28 @@ def handle_message(event):
                     ID = event.source.group_id
                 elif event.source.type == 'user':
                     ID = event.source.user_id
-                #line_bot_api.reply_message(
-                #    event.reply_token,
-                #    FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
-                line_bot_api.push_message(
-                    ID,
-                    FlexSendMessage(alt_text='hololive', contents=hololive.scrape()))
+                def split_list(l, n):
+                    for idx in range(0, len(l), n):
+                        yield l[idx:idx + n]
+                contents = hololive.scrape()
+                if len(contents) > 6:
+                    content = list(split_list(contents,6))
+                    for i in range(len(content)):
+                        base = {
+                            "type": "carousel",
+                            "contents": [i]
+                        }
+                        line_bot_api.push_message(
+                            ID,
+                            FlexSendMessage(alt_text='hololive', contents=base))
+                else:
+                    base = {
+                            "type": "carousel",
+                            "contents": contents
+                        }
+                    line_bot_api.push_message(
+                        ID,
+                        FlexSendMessage(alt_text='hololive', contents=base))
         if msg == "compass":
             line_bot_api.reply_message(
                 event.reply_token,
