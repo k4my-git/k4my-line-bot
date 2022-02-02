@@ -136,11 +136,6 @@ def handle_message(event):
                 event.source.group_id,
                  TextSendMessage(text=f"{end}sec"))
         if msg == "hololive":
-           #if hololive.scrape() is None:
-           #    line_bot_api.reply_message(
-           #        event.reply_token,
-           #        TextSendMessage(text="今は誰も配信していません"))
-           #else:
             try:
                 if event.source.type == 'group':
                     ID = event.source.group_id
