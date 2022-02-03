@@ -122,6 +122,10 @@ def callback():
 def handle_message(event):
     try:
         msg = event.message.text
+        if event.source.type == 'group':
+            ID = event.source.group_id
+        elif event.source.type == 'user':
+            ID = event.source.user_id
         if msg == "test":
             line_bot_api.reply_message(
                 event.reply_token,
@@ -134,13 +138,9 @@ def handle_message(event):
             end = time.time() - start
             line_bot_api.push_message(
                 event.source.group_id,
-                 TextSendMessage(text=f"{end}sec"))
+                TextSendMessage(text=f"{end}sec"))
         if msg == "hololive":
             try:
-                if event.source.type == 'group':
-                    ID = event.source.group_id
-                elif event.source.type == 'user':
-                    ID = event.source.user_id
                 def split_list(l, n):
                     for idx in range(0, len(l), n):
                         yield l[idx:idx + n]
@@ -204,14 +204,14 @@ def handle_message(event):
                 TextSendMessage(text=get_response_message()))
         if "greeting:" in msg:
             txt = msg.replace("greeting:","")
-            if check_greeting(event.source.group_id) == False:
+            if check_greeting(ID) == False:
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text=set_greeting(event.source.group_id, txt)))
+                    TextSendMessage(text=set_greeting(ID, txt)))
             else:
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text=update_greeting(event.source.group_id, txt)))
+                    TextSendMessage(text=update_greeting(ID, txt)))
     except Exception:
         print(traceback.format_exc())
 
