@@ -137,7 +137,7 @@ def handle_message(event):
                 TextSendMessage(text="process..."))
             end = time.time() - start
             line_bot_api.push_message(
-                event.source.group_id,
+                ID,
                 TextSendMessage(text=f"{end}sec"))
         if msg == "hololive":
             try:
