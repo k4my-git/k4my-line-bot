@@ -2,8 +2,7 @@ import time
 
 import requests
 from bs4 import BeautifulSoup as bs
-from youtubesearchpython import *
-
+import youtubesearchpython
 
 def scrape():
     print("hololive")
