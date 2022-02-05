@@ -215,8 +215,8 @@ def handle_message(event):
                     TextSendMessage(text=update_greeting(ID, txt)))
         if msg == "exchange":
             result = get_quote_yahoo('JPY=X')
-            print(result)
             ary_result = result["price"].values
+            print(ary_result)
             price = ary_result[0]
             line_bot_api.reply_message(
                     event.reply_token,
