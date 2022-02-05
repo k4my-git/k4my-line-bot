@@ -7,3 +7,5 @@ html5lib==1.1
 youtube-search-python==1.4.9
 psycopg2==2.9.1
 pyshorteners==1.0.1
+pandas==1.4.0
+pandas-datareader==0.10.0

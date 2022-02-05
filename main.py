@@ -16,6 +16,7 @@ import traceback
 import logging
 import psycopg2
 import pyshorteners
+from pandas_datareader.data import get_quote_yahoo
 
 import hololive
 import compass
@@ -212,6 +213,13 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=update_greeting(ID, txt)))
+        if msg == "exchange":
+            result = get_quote_yahoo('JPY=X')
+            ary_result = result["price"].values
+            price = ary_result[0]
+            line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"USD/JPY\n{price}"))
     except Exception:
         print(traceback.format_exc())
 
