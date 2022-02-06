@@ -38,11 +38,12 @@ def scrape():
             y_data = youtubes(urls)
 
             data.append(dict(url=urls, name=y_data['name'], time=times, image=img, icon=icons, title=y_data['title'],
-                             count=y_data['viewcount'], chlink=y_data['chlink']))
-    if not data:
-        return None
-    else:
-        return flexdata(data)
+                            count=y_data['viewcount'], chlink=y_data['chlink']))
+    # if not data:
+    #     return None
+    # else:
+    #     
+    return flexdata(data)
 
 
 def youtubes(url):
