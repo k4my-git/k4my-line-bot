@@ -14,6 +14,7 @@ import os
 import time
 import traceback
 import logging
+from numpy import short
 import psycopg2
 import pyshorteners
 from pandas_datareader.data import get_quote_yahoo
@@ -45,7 +46,6 @@ def get_response_message():
             except Exception:
                 mes = "exception"
                 return mes
-
 def set_greeting(gid,text):
     with get_connection() as conn:
         with conn.cursor() as cur:
@@ -213,6 +213,12 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=update_greeting(ID, txt)))
+        if "short:" in msg:
+            url = msg.replace("greeting:","")
+            s_url = url_short(url)
+            line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=s_url))
         if msg == "exchange":
             result = get_quote_yahoo('JPY=X')
             ary_result = result["price"].values
