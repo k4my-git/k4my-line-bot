@@ -217,7 +217,7 @@ def handle_message(event):
             url = msg.replace("greeting:","")
             s_url = url_short(url)
             line_bot_api.reply_message(
-                    event.reply_token,
+                    ID,
                     TextSendMessage(text=s_url))
         if msg == "exchange":
             result = get_quote_yahoo('JPY=X')
