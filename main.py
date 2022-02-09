@@ -214,7 +214,7 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text=update_greeting(ID, txt)))
         if "short:" in msg:
-            url = msg.replace("greeting:","")
+            url = msg.replace("short:","")
             s_url = url_short(url)
             line_bot_api.reply_message(
                     ID,
