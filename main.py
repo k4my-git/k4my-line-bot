@@ -216,7 +216,7 @@ def handle_message(event):
         if "short:" in msg:
             url = msg.replace("short:","")
             s_url = url_short(url)
-            line_bot_api.reply_message(
+            line_bot_api.push_message(
                     ID,
                     TextSendMessage(text=s_url))
         if msg == "exchange":
