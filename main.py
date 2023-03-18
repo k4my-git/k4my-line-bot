@@ -238,7 +238,7 @@ def handle_message(event):
             res_text = res["choices"][0]["message"]["content"]
             line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text=f"USD/JPY\n{res_text}"))
+                    TextSendMessage(text=f"{res_text[2:]}"))
     except Exception:
         print(traceback.format_exc())
 
