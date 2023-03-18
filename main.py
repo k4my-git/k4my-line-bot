@@ -19,6 +19,7 @@ import psycopg2
 import pyshorteners
 from pandas_datareader.data import get_quote_yahoo
 
+import openai
 import hololive
 import compass
 
@@ -26,9 +27,11 @@ app = Flask(__name__)
 
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+OPENAI_APIKEY = os.environ["OPENAI_APIKEY"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+openai.api_key = OPENAI_APIKEY
 ####################################################################################
 #DB
 def get_connection():
@@ -226,6 +229,16 @@ def handle_message(event):
             line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=f"USD/JPY\n{price}"))
+        if "gpt:" in msg:
+            text = msg.replace("gpt:","")
+            res = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": text}]
+            )
+            res_text = res["choices"][0]["message"]["content"]
+            line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"USD/JPY\n{res_text}"))
     except Exception:
         print(traceback.format_exc())
 
