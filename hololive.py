@@ -21,8 +21,8 @@ def scrape():
         if 'border: 3px red' in str(ele):
             for y_url in ele.select('a[class=thumbnail]'):
                 urls = y_url['href']
-            for y_time in ele.select('div[class*=col-5]'):
-                times = y_time.get_text().replace(" ", "").replace("\n", "") + "～"
+            #for y_time in ele.select('div[class*=col-5]'):
+            #    times = y_time.get_text().replace(" ", "").replace("\n", "") + "～"
             #for y_name in ele.select('div[class*=name]'):
                 #names = y_name.get_text().replace(" ", "").replace("\n", "")
             for thumbnail in ele.select('div[class*=col-12] > img'):
@@ -37,7 +37,7 @@ def scrape():
             print(urls)
             y_data = youtubes(urls)
 
-            data.append(dict(url=urls, name=y_data['name'], time=times, image=img, icon=icons, title=y_data['title'],
+            data.append(dict(url=urls, name=y_data['name'], time="times", image=img, icon=icons, title=y_data['title'],
                             count=y_data['viewcount'], chlink=y_data['chlink']))
     # if not data:
     #     return None
