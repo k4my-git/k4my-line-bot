@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, FlexSendMessage,
     MemberJoinedEvent
 )
 import os
@@ -238,7 +238,20 @@ def handle_message(event):
             res_text = res["choices"][0]["message"]["content"]
             line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text=f"{res_text[2:]}"))
+                    TextSendMessage(text=f"{res_text}"))
+        if "dalle:" in msg:
+            text = msg.replace("dalle:","")
+            response = openai.Image.create(
+                prompt=text,
+                n=1,
+                size="1024x1024"
+            )
+            image_url = response['data'][0]['url']
+            
+            image_message = ImageSendMessage(
+                original_content_url = image_url,
+                preview_image_url = image_url)
+            line_bot_api.reply_message(event.replyToken, image_message)
     except Exception:
         print(traceback.format_exc())
 
