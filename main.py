@@ -251,7 +251,7 @@ def handle_message(event):
             image_message = ImageSendMessage(
                 original_content_url = image_url,
                 preview_image_url = image_url)
-            line_bot_api.reply_message(event.replyToken, image_message)
+            line_bot_api.reply_message(event.reply_token, image_message)
     except Exception:
         print(traceback.format_exc())
 
